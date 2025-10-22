@@ -144,6 +144,26 @@
   document.head.appendChild(style);
 
   // ============================================
+  // 🌐 스크립트 도메인 자동 감지
+  // ============================================
+  function getScriptBaseUrl() {
+    // 현재 실행 중인 스크립트의 URL 찾기
+    const scripts = document.querySelectorAll(
+      'script[src*="banner-script.js"]'
+    );
+    if (scripts.length > 0) {
+      const scriptUrl = scripts[scripts.length - 1].src;
+      const url = new URL(scriptUrl);
+      return `${url.protocol}//${url.host}`;
+    }
+    // 기본값
+    return window.location.origin;
+  }
+
+  const BASE_URL = getScriptBaseUrl();
+  console.log("🔗 배너 API 베이스 URL:", BASE_URL);
+
+  // ============================================
   // 🎯 배너 클래스
   // ============================================
   class Banner {
@@ -161,8 +181,14 @@
       // API에서 배너 데이터 가져오기
       await this.fetchData();
 
-      if (!this.data) {
-        console.error(`배너 데이터를 찾을 수 없습니다: ${this.bannerId}`);
+      if (!this.data || !this.data.images || this.data.images.length === 0) {
+        console.error(
+          `❌ 배너 데이터가 없거나 이미지가 없습니다: ${this.bannerId}`
+        );
+        this.container.innerHTML =
+          '<div style="padding: 20px; background: #fee; border: 2px dashed red; text-align: center;">배너를 찾을 수 없습니다.<br>banner_id: ' +
+          this.bannerId +
+          "</div>";
         return;
       }
 
@@ -191,8 +217,11 @@
 
     async fetchData() {
       try {
-        // 먼저 API 호출 시도
-        const response = await fetch(`/api/banners/${this.bannerId}`);
+        // API 호출 (스크립트 도메인 사용)
+        const apiUrl = `${BASE_URL}/api/banners/${this.bannerId}`;
+        console.log("📡 API 호출:", apiUrl);
+
+        const response = await fetch(apiUrl);
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -203,14 +232,16 @@
         // 데이터 변환
         this.data = {
           banner_type: this.getBannerTypeClass(data.type),
-          images: data.items.map((item) => item.image_url || item.video_url),
+          images: data.items
+            .map((item) => item.image_url || item.video_url)
+            .filter(Boolean),
           settings: data.settings || {},
         };
+
+        console.log("✅ API 데이터 로드 완료:", this.data);
       } catch (error) {
-        console.warn(
-          "⚠️ API 연결 실패, 로컬 테스트 데이터 사용:",
-          error.message
-        );
+        console.warn("⚠️ API 연결 실패:", error.message);
+        console.log("🔄 Mock 데이터 시도...");
 
         // API 실패 시 로컬 mock 데이터 사용
         await this.loadMockData();
@@ -219,7 +250,15 @@
 
     async loadMockData() {
       try {
-        const response = await fetch("/mock-data.json");
+        const mockUrl = `${BASE_URL}/mock-data.json`;
+        console.log("📡 Mock 데이터 호출:", mockUrl);
+
+        const response = await fetch(mockUrl);
+
+        if (!response.ok) {
+          throw new Error(`Mock 데이터 로드 실패: ${response.status}`);
+        }
+
         const mockData = await response.json();
         const data = mockData[this.bannerId];
 
@@ -229,13 +268,17 @@
 
         this.data = {
           banner_type: this.getBannerTypeClass(data.type),
-          images: data.items.map((item) => item.image_url),
+          images: data.items.map((item) => item.image_url).filter(Boolean),
           settings: data.settings || {},
         };
 
-        console.log("✅ 로컬 테스트 데이터 로드 완료");
+        console.log("✅ Mock 데이터 로드 완료:", this.data);
       } catch (error) {
-        console.error("❌ Mock 데이터 로드 실패:", error);
+        console.error("❌ Mock 데이터 로드 실패:", error.message);
+        console.error(
+          "💡 배너 데이터를 찾을 수 없습니다. banner_id를 확인하세요:",
+          this.bannerId
+        );
       }
     }
 

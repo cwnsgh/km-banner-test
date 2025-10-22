@@ -52,33 +52,7 @@ export default function BannerForm({
     setItems(newItems);
   };
 
-  const uploadFile = async (index: number, file: File) => {
-    try {
-      // 1. 이미지 압축 (동적 import)
-      const { compressForBannerType } = await import("@/lib/imageCompression");
-
-      console.log("🔄 이미지 압축 중...");
-      const compressedFile = await compressForBannerType(file, type);
-
-      // 2. 압축된 이미지 업로드
-      const formData = new FormData();
-      formData.append("file", compressedFile);
-
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await res.json();
-
-      if (data.url) {
-        updateItem(index, "image_url", data.url);
-        console.log("✅ 업로드 완료!");
-      }
-    } catch (error) {
-      console.error("Upload error:", error);
-      alert("파일 업로드 실패");
-    }
-  };
+  // 이미지 업로드 기능 제거 - URL 직접 입력 방식 사용
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,6 +67,16 @@ export default function BannerForm({
       return;
     }
 
+    // 이미지 URL이 없는 아이템 체크
+    const hasEmptyImages = items.some(
+      (item) => !item.image_url && !item.video_url
+    );
+    if (hasEmptyImages) {
+      alert("모든 아이템에 이미지나 동영상을 추가해주세요");
+      return;
+    }
+
+    console.log("📤 제출 데이터:", { name, type, items, settings });
     onSubmit({ name, type, items, settings });
   };
 
@@ -238,30 +222,41 @@ export default function BannerForm({
 
               <div className="space-y-3">
                 <div>
-                  <label className="block text-sm mb-1">이미지 업로드</label>
+                  <label className="block text-sm mb-1 font-medium">
+                    이미지 URL
+                  </label>
                   <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) uploadFile(index, file);
-                    }}
-                    className="w-full"
+                    type="text"
+                    value={item.image_url || ""}
+                    onChange={(e) =>
+                      updateItem(index, "image_url", e.target.value)
+                    }
+                    className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="https://images.unsplash.com/photo-xxx?w=1200"
                   />
                   {item.image_url && (
                     <div className="mt-2">
                       <img
                         src={item.image_url}
                         alt=""
-                        className="h-20 object-cover rounded"
+                        className="h-32 object-cover rounded border"
+                        onError={(e) => {
+                          e.currentTarget.src = "";
+                          e.currentTarget.alt = "이미지 로드 실패";
+                          e.currentTarget.className =
+                            "h-32 flex items-center justify-center bg-gray-100 text-gray-400 text-sm rounded border";
+                        }}
                       />
                     </div>
                   )}
+                  <p className="text-xs text-gray-500 mt-1">
+                    💡 Unsplash, Imgur 등에서 이미지 URL을 복사하세요
+                  </p>
                 </div>
 
                 <div>
-                  <label className="block text-sm mb-1">
-                    또는 동영상 URL (YouTube, Vimeo 등)
+                  <label className="block text-sm mb-1 font-medium">
+                    동영상 URL (선택)
                   </label>
                   <input
                     type="text"
@@ -269,22 +264,30 @@ export default function BannerForm({
                     onChange={(e) =>
                       updateItem(index, "video_url", e.target.value)
                     }
-                    className="w-full px-3 py-2 border rounded"
-                    placeholder="https://youtube.com/..."
+                    className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="https://youtube.com/watch?v=..."
                   />
+                  <p className="text-xs text-gray-500 mt-1">
+                    YouTube, Vimeo 등
+                  </p>
                 </div>
 
                 <div>
-                  <label className="block text-sm mb-1">링크 URL (선택)</label>
+                  <label className="block text-sm mb-1 font-medium">
+                    클릭 링크 URL (선택)
+                  </label>
                   <input
                     type="text"
                     value={item.link_url || ""}
                     onChange={(e) =>
                       updateItem(index, "link_url", e.target.value)
                     }
-                    className="w-full px-3 py-2 border rounded"
-                    placeholder="https://..."
+                    className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="https://your-shop.com/products/..."
                   />
+                  <p className="text-xs text-gray-500 mt-1">
+                    배너 클릭 시 이동할 페이지
+                  </p>
                 </div>
               </div>
             </div>
