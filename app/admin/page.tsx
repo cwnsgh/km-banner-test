@@ -49,8 +49,19 @@ export default function AdminPage() {
       fullscreen: "전체화면",
       slide: "슬라이드",
       long: "롱배너",
+      "main-slide": "메인 슬라이드",
+      "three-grid": "3개 나란히",
+      rolling: "롤링",
+      cards: "카드 갤러리",
+      fade: "페이드",
+      grid: "2x2 그리드",
     };
     return labels[type] || type;
+  };
+
+  const openPreview = (bannerId: string) => {
+    const previewUrl = `/test-local.html#${bannerId}`;
+    window.open(previewUrl, "_blank", "width=1200,height=800");
   };
 
   if (loading) {
@@ -114,6 +125,12 @@ export default function AdminPage() {
                   </div>
 
                   <div className="flex gap-2">
+                    <button
+                      onClick={() => openPreview(banner.id)}
+                      className="flex-1 px-4 py-2 bg-green-100 text-green-800 rounded hover:bg-green-200 text-center transition-colors"
+                    >
+                      👁️ 미리보기
+                    </button>
                     <Link
                       href={`/admin/detail/${banner.id}`}
                       className="flex-1 px-4 py-2 bg-blue-100 text-blue-800 rounded hover:bg-blue-200 text-center transition-colors"

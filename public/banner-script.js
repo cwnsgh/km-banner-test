@@ -57,45 +57,74 @@
     }
 
     /* ============================================ */
-    /* 🎨 다양한 배너 스타일들 */
+    /* 🎯 실제 사용 가능한 배너 스타일들 */
     /* ============================================ */
 
-    /* 1️⃣ 기본 캐러셀 - 3개 나란히 */
-    .banner-carousel {
+    /* 1️⃣ 메인 슬라이드 배너 (가로 꽉찬) - 가장 많이 사용 */
+    .banner-main-slide {
       width: 100%;
-      height: 300px;
+      height: 400px;
       overflow: hidden;
       position: relative;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
-    .banner-carousel .banner-slide {
+    .banner-main-slide .banner-slide {
       display: flex;
       width: 300%;
       height: 100%;
-      animation: carousel-slide 15s infinite linear;
+      animation: main-slide 8s infinite ease-in-out;
     }
 
-    .banner-carousel .banner-image {
+    .banner-main-slide .banner-image {
       width: 33.333%;
       height: 100%;
       object-fit: cover;
       flex-shrink: 0;
     }
 
-    /* 2️⃣ 가로 꽉찬 롤링 배너 */
+    /* 2️⃣ 3개 나란히 배너 (상품 소개용) */
+    .banner-three-grid {
+      width: 100%;
+      height: 300px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 15px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 12px;
+    }
+
+    .banner-three-grid .banner-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .banner-three-grid .banner-image:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    /* 3️⃣ 롤링 배너 (연속 슬라이드) - 할인/이벤트용 */
     .banner-rolling {
       width: 100%;
       height: 200px;
       overflow: hidden;
       position: relative;
-      background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 8px;
     }
 
     .banner-rolling .banner-slide {
       display: flex;
       width: 300%;
       height: 100%;
-      animation: rolling-slide 20s infinite linear;
+      animation: rolling-slide 15s infinite linear;
     }
 
     .banner-rolling .banner-image {
@@ -103,167 +132,45 @@
       height: 100%;
       object-fit: cover;
       flex-shrink: 0;
-      border-right: 2px solid white;
+      border-right: 3px solid rgba(255, 255, 255, 0.3);
     }
 
-    /* 3️⃣ 세로 스택 배너 */
-    .banner-stack {
-      width: 100%;
-      height: 400px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .banner-stack .banner-slide {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      height: 300%;
-      animation: stack-slide 18s infinite linear;
-    }
-
-    .banner-stack .banner-image {
-      width: 100%;
-      height: 33.333%;
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-
-    /* 4️⃣ 그리드 배너 (2x2) */
-    .banner-grid {
-      width: 100%;
-      height: 400px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 10px;
-      overflow: hidden;
-    }
-
-    .banner-grid .banner-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 8px;
-      transition: transform 0.3s ease;
-    }
-
-    .banner-grid .banner-image:hover {
-      transform: scale(1.05);
-    }
-
-    /* 5️⃣ 원형 회전 배너 */
-    .banner-circular {
-      width: 400px;
-      height: 400px;
-      margin: 0 auto;
-      position: relative;
-      border-radius: 50%;
-      overflow: hidden;
-    }
-
-    .banner-circular .banner-slide {
-      width: 100%;
-      height: 100%;
-      animation: circular-rotate 20s infinite linear;
-    }
-
-    .banner-circular .banner-image {
-      position: absolute;
-      width: 50%;
-      height: 50%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-
-    .banner-circular .banner-image:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
-    .banner-circular .banner-image:nth-child(2) { top: 50%; right: 0; transform: translateY(-50%); }
-    .banner-circular .banner-image:nth-child(3) { bottom: 0; left: 50%; transform: translateX(-50%); }
-
-    /* 6️⃣ 파노라마 배너 */
-    .banner-panorama {
-      width: 100%;
-      height: 250px;
-      overflow: hidden;
-      position: relative;
-      background: #000;
-    }
-
-    .banner-panorama .banner-slide {
-      display: flex;
-      width: 300%;
-      height: 100%;
-      animation: panorama-slide 25s infinite linear;
-    }
-
-    .banner-panorama .banner-image {
-      width: 33.333%;
-      height: 100%;
-      object-fit: cover;
-      flex-shrink: 0;
-      filter: brightness(0.8);
-      transition: filter 0.3s ease;
-    }
-
-    .banner-panorama .banner-image:hover {
-      filter: brightness(1.1);
-    }
-
-    /* 7️⃣ 카드 스타일 배너 */
+    /* 4️⃣ 카드 스타일 배너 (상품 갤러리용) */
     .banner-cards {
       width: 100%;
-      height: 300px;
+      height: 250px;
       display: flex;
       gap: 20px;
       padding: 20px;
       overflow-x: auto;
       scroll-behavior: smooth;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .banner-cards .banner-image {
-      min-width: 300px;
+      min-width: 200px;
       height: 100%;
       object-fit: cover;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease;
+      cursor: pointer;
     }
 
     .banner-cards .banner-image:hover {
-      transform: translateY(-5px);
+      transform: scale(1.05);
     }
 
-    /* 8️⃣ 모자이크 배너 */
-    .banner-mosaic {
-      width: 100%;
-      height: 400px;
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 5px;
-      overflow: hidden;
-    }
-
-    .banner-mosaic .banner-image:nth-child(1) {
-      grid-row: 1 / 3;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .banner-mosaic .banner-image:nth-child(2),
-    .banner-mosaic .banner-image:nth-child(3) {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* 9️⃣ 페이드 배너 */
+    /* 5️⃣ 페이드 배너 (브랜드 소개용) */
     .banner-fade {
       width: 100%;
-      height: 300px;
+      height: 350px;
       position: relative;
       overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     }
 
     .banner-fade .banner-image {
@@ -274,89 +181,68 @@
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 1s ease-in-out;
+      transition: opacity 2s ease-in-out;
     }
 
     .banner-fade .banner-image.active {
       opacity: 1;
     }
 
-    /* 🔟 슬라이딩 도어 배너 */
-    .banner-doors {
+    /* 6️⃣ 2x2 그리드 배너 (카테고리 소개용) */
+    .banner-grid {
       width: 100%;
-      height: 300px;
-      overflow: hidden;
-      position: relative;
+      height: 400px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 10px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 12px;
     }
 
-    .banner-doors .banner-slide {
-      display: flex;
-      width: 300%;
-      height: 100%;
-      animation: doors-slide 12s infinite ease-in-out;
-    }
-
-    .banner-doors .banner-image {
-      width: 33.333%;
+    .banner-grid .banner-image {
+      width: 100%;
       height: 100%;
       object-fit: cover;
-      flex-shrink: 0;
-      clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
     }
 
-    .banner-doors .banner-image:nth-child(2) {
-      clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
-    }
-
-    .banner-doors .banner-image:nth-child(3) {
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    .banner-grid .banner-image:hover {
+      transform: scale(1.02);
     }
 
     /* ============================================ */
-    /* 🎬 애니메이션 키프레임들 */
+    /* 🎬 실제 사용 가능한 애니메이션들 */
     /* ============================================ */
 
-    @keyframes carousel-slide {
+    /* 메인 슬라이드 - 부드러운 전환 */
+    @keyframes main-slide {
       0% { transform: translateX(0); }
-      25% { transform: translateX(0); }
-      33.333% { transform: translateX(-33.333%); }
-      58.333% { transform: translateX(-33.333%); }
-      66.666% { transform: translateX(-66.666%); }
-      91.666% { transform: translateX(-66.666%); }
+      20% { transform: translateX(0); }
+      25% { transform: translateX(-33.333%); }
+      45% { transform: translateX(-33.333%); }
+      50% { transform: translateX(-66.666%); }
+      70% { transform: translateX(-66.666%); }
+      75% { transform: translateX(-100%); }
+      95% { transform: translateX(-100%); }
       100% { transform: translateX(0); }
     }
 
+    /* 롤링 슬라이드 - 연속적인 움직임 */
     @keyframes rolling-slide {
       0% { transform: translateX(0); }
       100% { transform: translateX(-66.666%); }
     }
 
-    @keyframes stack-slide {
-      0% { transform: translateY(0); }
-      25% { transform: translateY(0); }
-      33.333% { transform: translateY(-33.333%); }
-      58.333% { transform: translateY(-33.333%); }
-      66.666% { transform: translateY(-66.666%); }
-      91.666% { transform: translateY(-66.666%); }
-      100% { transform: translateY(0); }
-    }
-
-    @keyframes circular-rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes panorama-slide {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-66.666%); }
-    }
-
-    @keyframes doors-slide {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(0); }
-      50% { transform: translateX(-33.333%); }
-      75% { transform: translateX(-33.333%); }
-      100% { transform: translateX(-66.666%); }
+    /* 페이드 전환 - 부드러운 페이드 */
+    @keyframes fade-transition {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; }
     }
 
     /* ============================================ */
@@ -468,13 +354,93 @@
       background: rgba(255, 255, 255, 1);
     }
 
-    /* 모바일 반응형 */
+    /* ============================================ */
+    /* 📱 모바일 반응형 최적화 */
+    /* ============================================ */
+    
     @media (max-width: 768px) {
-      .banner-slide {
-        height: 300px;
+      /* 메인 슬라이드 - 모바일 */
+      .banner-main-slide {
+        height: 250px;
+        border-radius: 6px;
       }
-      .banner-long {
+      
+      /* 3개 나란히 - 모바일에서 1열로 */
+      .banner-three-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, 1fr);
+        height: auto;
+        gap: 10px;
+        padding: 15px;
+      }
+      
+      /* 롤링 배너 - 모바일 */
+      .banner-rolling {
+        height: 150px;
+        border-radius: 6px;
+      }
+      
+      /* 카드 갤러리 - 모바일 */
+      .banner-cards {
         height: 200px;
+        padding: 15px;
+        gap: 15px;
+      }
+      
+      .banner-cards .banner-image {
+        min-width: 150px;
+      }
+      
+      /* 페이드 배너 - 모바일 */
+      .banner-fade {
+        height: 250px;
+        border-radius: 6px;
+      }
+      
+      /* 2x2 그리드 - 모바일에서 2x2 유지 */
+      .banner-grid {
+        height: 300px;
+        padding: 15px;
+        gap: 8px;
+      }
+      
+      /* 기본 배너들 */
+      .banner-slide {
+        height: 250px;
+      }
+      
+      .banner-long {
+        height: 150px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      /* 초소형 화면 */
+      .banner-main-slide {
+        height: 200px;
+      }
+      
+      .banner-rolling {
+        height: 120px;
+      }
+      
+      .banner-cards {
+        height: 180px;
+        padding: 10px;
+      }
+      
+      .banner-cards .banner-image {
+        min-width: 120px;
+      }
+      
+      .banner-fade {
+        height: 200px;
+      }
+      
+      .banner-grid {
+        height: 250px;
+        padding: 10px;
+        gap: 6px;
       }
     }
   `;
@@ -539,25 +505,47 @@
       // 이미지 생성
       this.createImages();
 
-      // 네비게이션 추가 (캐러셀 제외)
+      // 네비게이션 추가 (CSS 애니메이션 배너들 제외)
+      const noNavTypes = [
+        "banner-carousel",
+        "banner-rolling",
+        "banner-stack",
+        "banner-panorama",
+        "banner-doors",
+        "banner-grid",
+        "banner-mosaic",
+        "banner-cards",
+        "banner-circular",
+      ];
       if (
         this.data.images.length > 1 &&
-        this.data.banner_type !== "banner-carousel"
+        !noNavTypes.includes(this.data.banner_type)
       ) {
         this.createNavigation();
         this.createPagination();
       }
 
-      // 자동재생 (캐러셀은 CSS 애니메이션으로 자동)
+      // 자동재생 (CSS 애니메이션 배너들 제외)
+      const noAutoplayTypes = [
+        "banner-carousel",
+        "banner-rolling",
+        "banner-stack",
+        "banner-panorama",
+        "banner-doors",
+        "banner-grid",
+        "banner-mosaic",
+        "banner-cards",
+        "banner-circular",
+      ];
       if (
         this.data.settings?.autoplay &&
-        this.data.banner_type !== "banner-carousel"
+        !noAutoplayTypes.includes(this.data.banner_type)
       ) {
         this.startAutoplay();
       }
 
-      // 첫 이미지 활성화 (캐러셀 제외)
-      if (this.data.banner_type !== "banner-carousel") {
+      // 첫 이미지 활성화 (CSS 애니메이션 배너들 제외)
+      if (!noNavTypes.includes(this.data.banner_type)) {
         this.updateActive();
       }
 
@@ -633,30 +621,46 @@
 
     getBannerTypeClass(type) {
       const typeMap = {
+        // 기본 배너들
         slide: "banner-slide",
         long: "banner-long",
         fullscreen: "banner-fullscreen",
-        square: "banner-square",
-        vertical: "banner-vertical",
-        carousel: "banner-carousel",
-        rolling: "banner-rolling",
-        stack: "banner-stack",
-        grid: "banner-grid",
-        circular: "banner-circular",
-        panorama: "banner-panorama",
-        cards: "banner-cards",
-        mosaic: "banner-mosaic",
-        fade: "banner-fade",
-        doors: "banner-doors",
+
+        // 실제 사용 가능한 배너들
+        "main-slide": "banner-main-slide", // 메인 슬라이드 (가로 꽉찬)
+        "three-grid": "banner-three-grid", // 3개 나란히
+        rolling: "banner-rolling", // 롤링 배너
+        cards: "banner-cards", // 카드 스타일
+        fade: "banner-fade", // 페이드 배너
+        grid: "banner-grid", // 2x2 그리드
+
+        // 기존 호환성
+        carousel: "banner-main-slide", // 캐러셀 → 메인 슬라이드로 매핑
       };
       return typeMap[type] || "banner-slide";
     }
 
     createImages() {
-      // 캐러셀 배너인 경우 특별 처리
-      if (this.data.banner_type === "banner-carousel") {
-        this.createCarouselImages();
+      // 특별한 레이아웃이 필요한 배너들 처리
+      if (
+        this.data.banner_type === "banner-carousel" ||
+        this.data.banner_type === "banner-rolling" ||
+        this.data.banner_type === "banner-stack" ||
+        this.data.banner_type === "banner-panorama" ||
+        this.data.banner_type === "banner-doors"
+      ) {
+        this.createSlideImages();
+      } else if (
+        this.data.banner_type === "banner-grid" ||
+        this.data.banner_type === "banner-mosaic"
+      ) {
+        this.createGridImages();
+      } else if (this.data.banner_type === "banner-cards") {
+        this.createCardImages();
+      } else if (this.data.banner_type === "banner-circular") {
+        this.createCircularImages();
       } else {
+        // 기본 배너 (slide, long, fullscreen, fade 등)
         this.data.images.forEach((imageUrl, index) => {
           const img = document.createElement("img");
           img.src = imageUrl;
@@ -667,6 +671,55 @@
       }
 
       this.images = this.container.querySelectorAll(".banner-image");
+    }
+
+    createSlideImages() {
+      // 슬라이드 컨테이너 생성
+      const slideContainer = document.createElement("div");
+      slideContainer.className = "banner-slide";
+
+      this.data.images.forEach((imageUrl, index) => {
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.className = "banner-image";
+        img.alt = `Banner ${index + 1}`;
+        slideContainer.appendChild(img);
+      });
+
+      this.container.appendChild(slideContainer);
+    }
+
+    createGridImages() {
+      // 그리드 배너는 직접 컨테이너에 이미지 추가
+      this.data.images.forEach((imageUrl, index) => {
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.className = "banner-image";
+        img.alt = `Banner ${index + 1}`;
+        this.container.appendChild(img);
+      });
+    }
+
+    createCardImages() {
+      // 카드 배너는 직접 컨테이너에 이미지 추가
+      this.data.images.forEach((imageUrl, index) => {
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.className = "banner-image";
+        img.alt = `Banner ${index + 1}`;
+        this.container.appendChild(img);
+      });
+    }
+
+    createCircularImages() {
+      // 원형 배너는 직접 컨테이너에 이미지 추가
+      this.data.images.forEach((imageUrl, index) => {
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.className = "banner-image";
+        img.alt = `Banner ${index + 1}`;
+        this.container.appendChild(img);
+      });
     }
 
     createCarouselImages() {

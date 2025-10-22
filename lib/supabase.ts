@@ -11,19 +11,15 @@ const supabaseAnonKey =
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export type BannerType =
-  | "fullscreen"
-  | "slide"
-  | "long"
-  | "carousel"
-  | "rolling"
-  | "stack"
-  | "grid"
-  | "circular"
-  | "panorama"
-  | "cards"
-  | "mosaic"
-  | "fade"
-  | "doors";
+  | "fullscreen" // 전체화면
+  | "slide" // 기본 슬라이드
+  | "long" // 롱배너
+  | "main-slide" // 메인 슬라이드 (가로 꽉찬)
+  | "three-grid" // 3개 나란히
+  | "rolling" // 롤링 배너
+  | "cards" // 카드 스타일
+  | "fade" // 페이드 배너
+  | "grid"; // 2x2 그리드
 
 export interface BannerItem {
   id?: string;

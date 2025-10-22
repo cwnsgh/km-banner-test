@@ -31,12 +31,6 @@ export default function BannerForm({
   });
 
   const addItem = () => {
-    // 캐러셀 배너는 최대 3개까지만
-    if (type === "carousel" && items.length >= 3) {
-      alert("캐러셀 배너는 최대 3개의 이미지만 사용할 수 있습니다.");
-      return;
-    }
-
     setItems([
       ...items,
       {
@@ -106,176 +100,145 @@ export default function BannerForm({
       {/* 배너 타입 */}
       <div>
         <label className="block text-sm font-medium mb-2">배너 타입</label>
-        <div className="grid grid-cols-3 gap-3">
-          {/* 기본 배너들 */}
+        <div className="grid grid-cols-3 gap-4">
+          {/* 🎯 실제 사용 가능한 배너들 */}
           <button
             type="button"
-            onClick={() => setType("fullscreen")}
-            className={`p-3 border-2 rounded-lg transition-colors ${
-              type === "fullscreen"
+            onClick={() => setType("main-slide")}
+            className={`p-4 border-2 rounded-lg transition-colors ${
+              type === "main-slide"
                 ? "border-blue-600 bg-blue-50"
                 : "border-gray-200 hover:border-gray-300"
             }`}
           >
-            <div className="font-semibold text-sm">전체화면</div>
-            <div className="text-xs text-gray-500 mt-1">화면 전체</div>
-          </button>
-          <button
-            type="button"
-            onClick={() => setType("slide")}
-            className={`p-3 border-2 rounded-lg transition-colors ${
-              type === "slide"
-                ? "border-blue-600 bg-blue-50"
-                : "border-gray-200 hover:border-gray-300"
-            }`}
-          >
-            <div className="font-semibold text-sm">슬라이드</div>
-            <div className="text-xs text-gray-500 mt-1">영역 내 슬라이드</div>
-          </button>
-          <button
-            type="button"
-            onClick={() => setType("long")}
-            className={`p-3 border-2 rounded-lg transition-colors ${
-              type === "long"
-                ? "border-blue-600 bg-blue-50"
-                : "border-gray-200 hover:border-gray-300"
-            }`}
-          >
-            <div className="font-semibold text-sm">롱배너</div>
-            <div className="text-xs text-gray-500 mt-1">가로 꽉차게</div>
+            <div className="font-semibold text-sm">🎬 메인 슬라이드</div>
+            <div className="text-xs text-gray-500 mt-1">
+              가로 꽉찬 메인 배너
+            </div>
+            <div className="text-xs text-gray-400 mt-1">권장: 1200x400px</div>
           </button>
 
-          {/* 슬라이딩 배너들 */}
           <button
             type="button"
-            onClick={() => setType("carousel")}
-            className={`p-3 border-2 rounded-lg transition-colors ${
-              type === "carousel"
+            onClick={() => setType("three-grid")}
+            className={`p-4 border-2 rounded-lg transition-colors ${
+              type === "three-grid"
                 ? "border-blue-600 bg-blue-50"
                 : "border-gray-200 hover:border-gray-300"
             }`}
           >
-            <div className="font-semibold text-sm">🎠 캐러셀</div>
-            <div className="text-xs text-gray-500 mt-1">3개 나란히</div>
+            <div className="font-semibold text-sm">📱 3개 나란히</div>
+            <div className="text-xs text-gray-500 mt-1">상품 소개용</div>
+            <div className="text-xs text-gray-400 mt-1">권장: 300x300px</div>
           </button>
+
           <button
             type="button"
             onClick={() => setType("rolling")}
-            className={`p-3 border-2 rounded-lg transition-colors ${
+            className={`p-4 border-2 rounded-lg transition-colors ${
               type === "rolling"
                 ? "border-blue-600 bg-blue-50"
                 : "border-gray-200 hover:border-gray-300"
             }`}
           >
-            <div className="font-semibold text-sm">🔄 롤링</div>
-            <div className="text-xs text-gray-500 mt-1">연속 슬라이드</div>
-          </button>
-          <button
-            type="button"
-            onClick={() => setType("stack")}
-            className={`p-3 border-2 rounded-lg transition-colors ${
-              type === "stack"
-                ? "border-blue-600 bg-blue-50"
-                : "border-gray-200 hover:border-gray-300"
-            }`}
-          >
-            <div className="font-semibold text-sm">📚 스택</div>
-            <div className="text-xs text-gray-500 mt-1">세로 슬라이드</div>
+            <div className="font-semibold text-sm">🔄 롤링 배너</div>
+            <div className="text-xs text-gray-500 mt-1">할인/이벤트용</div>
+            <div className="text-xs text-gray-400 mt-1">권장: 1200x200px</div>
           </button>
 
-          {/* 그리드 배너들 */}
-          <button
-            type="button"
-            onClick={() => setType("grid")}
-            className={`p-3 border-2 rounded-lg transition-colors ${
-              type === "grid"
-                ? "border-blue-600 bg-blue-50"
-                : "border-gray-200 hover:border-gray-300"
-            }`}
-          >
-            <div className="font-semibold text-sm">⚏ 그리드</div>
-            <div className="text-xs text-gray-500 mt-1">2x2 격자</div>
-          </button>
-          <button
-            type="button"
-            onClick={() => setType("mosaic")}
-            className={`p-3 border-2 rounded-lg transition-colors ${
-              type === "mosaic"
-                ? "border-blue-600 bg-blue-50"
-                : "border-gray-200 hover:border-gray-300"
-            }`}
-          >
-            <div className="font-semibold text-sm">🧩 모자이크</div>
-            <div className="text-xs text-gray-500 mt-1">비대칭 배치</div>
-          </button>
           <button
             type="button"
             onClick={() => setType("cards")}
-            className={`p-3 border-2 rounded-lg transition-colors ${
+            className={`p-4 border-2 rounded-lg transition-colors ${
               type === "cards"
                 ? "border-blue-600 bg-blue-50"
                 : "border-gray-200 hover:border-gray-300"
             }`}
           >
-            <div className="font-semibold text-sm">🃏 카드</div>
-            <div className="text-xs text-gray-500 mt-1">카드 스타일</div>
+            <div className="font-semibold text-sm">🃏 카드 갤러리</div>
+            <div className="text-xs text-gray-500 mt-1">상품 갤러리용</div>
+            <div className="text-xs text-gray-400 mt-1">권장: 200x250px</div>
           </button>
 
-          {/* 특수 효과 배너들 */}
           <button
             type="button"
             onClick={() => setType("fade")}
-            className={`p-3 border-2 rounded-lg transition-colors ${
+            className={`p-4 border-2 rounded-lg transition-colors ${
               type === "fade"
                 ? "border-blue-600 bg-blue-50"
                 : "border-gray-200 hover:border-gray-300"
             }`}
           >
-            <div className="font-semibold text-sm">✨ 페이드</div>
-            <div className="text-xs text-gray-500 mt-1">페이드 전환</div>
+            <div className="font-semibold text-sm">✨ 페이드 배너</div>
+            <div className="text-xs text-gray-500 mt-1">브랜드 소개용</div>
+            <div className="text-xs text-gray-400 mt-1">권장: 1200x350px</div>
           </button>
+
           <button
             type="button"
-            onClick={() => setType("circular")}
-            className={`p-3 border-2 rounded-lg transition-colors ${
-              type === "circular"
+            onClick={() => setType("grid")}
+            className={`p-4 border-2 rounded-lg transition-colors ${
+              type === "grid"
                 ? "border-blue-600 bg-blue-50"
                 : "border-gray-200 hover:border-gray-300"
             }`}
           >
-            <div className="font-semibold text-sm">⭕ 원형</div>
-            <div className="text-xs text-gray-500 mt-1">원형 회전</div>
-          </button>
-          <button
-            type="button"
-            onClick={() => setType("panorama")}
-            className={`p-3 border-2 rounded-lg transition-colors ${
-              type === "panorama"
-                ? "border-blue-600 bg-blue-50"
-                : "border-gray-200 hover:border-gray-300"
-            }`}
-          >
-            <div className="font-semibold text-sm">🌅 파노라마</div>
-            <div className="text-xs text-gray-500 mt-1">넓은 화면</div>
+            <div className="font-semibold text-sm">⚏ 2x2 그리드</div>
+            <div className="text-xs text-gray-500 mt-1">카테고리 소개용</div>
+            <div className="text-xs text-gray-400 mt-1">권장: 400x400px</div>
           </button>
         </div>
 
-        {/* 캐러셀 배너 안내 */}
-        {type === "carousel" && (
+        {/* 배너 타입별 안내 */}
+        {type === "main-slide" && (
           <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
             <div className="flex items-start gap-2">
-              <div className="text-blue-600 text-lg">🎠</div>
+              <div className="text-blue-600 text-lg">🎬</div>
               <div>
                 <h4 className="font-semibold text-blue-800">
-                  캐러셀 배너 안내
+                  메인 슬라이드 배너
                 </h4>
                 <p className="text-sm text-blue-700 mt-1">
-                  • 정확히 3개의 이미지가 필요합니다
+                  • 3개 이미지가 자동으로 슬라이드됩니다
                   <br />
-                  • 3개 이미지가 나란히 표시되며 자동으로 무한 슬라이드됩니다
+                  • 가로 꽉찬 메인 배너로 사용하기 적합합니다
+                  <br />• 권장 이미지 크기: 1200x400px (3:1 비율)
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {type === "three-grid" && (
+          <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+            <div className="flex items-start gap-2">
+              <div className="text-green-600 text-lg">📱</div>
+              <div>
+                <h4 className="font-semibold text-green-800">
+                  3개 나란히 배너
+                </h4>
+                <p className="text-sm text-green-700 mt-1">
+                  • 3개 이미지가 나란히 고정 표시됩니다
                   <br />
-                  • 호버 시 일시정지됩니다
-                  <br />• 네비게이션 버튼은 표시되지 않습니다
+                  • 상품 소개나 카테고리 소개에 적합합니다
+                  <br />• 권장 이미지 크기: 300x300px (정사각형)
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {type === "rolling" && (
+          <div className="mt-4 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+            <div className="flex items-start gap-2">
+              <div className="text-purple-600 text-lg">🔄</div>
+              <div>
+                <h4 className="font-semibold text-purple-800">롤링 배너</h4>
+                <p className="text-sm text-purple-700 mt-1">
+                  • 3개 이미지가 연속적으로 롤링됩니다
+                  <br />
+                  • 할인 정보나 이벤트 공지에 적합합니다
+                  <br />• 권장 이미지 크기: 1200x200px (6:1 비율)
                 </p>
               </div>
             </div>
@@ -343,15 +306,9 @@ export default function BannerForm({
           <button
             type="button"
             onClick={addItem}
-            disabled={type === "carousel" && items.length >= 3}
-            className={`px-4 py-2 rounded-lg ${
-              type === "carousel" && items.length >= 3
-                ? "bg-gray-400 text-gray-200 cursor-not-allowed"
-                : "bg-green-600 text-white hover:bg-green-700"
-            }`}
+            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
           >
-            + 아이템 추가{" "}
-            {type === "carousel" && items.length >= 3 && "(최대 3개)"}
+            + 아이템 추가
           </button>
         </div>
 

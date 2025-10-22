@@ -138,35 +138,49 @@
       </div>
     </div> -->
 
-    <!-- 🎨 다양한 배너 스타일 테스트 -->
+    <!-- 🎯 실제 사용 가능한 배너들 -->
     <div class="section">
-      <h2>🎠 캐러셀 배너 (3개 나란히)</h2>
-      <p>3개 이미지가 나란히 표시되고 자동으로 무한 슬라이드됩니다!</p>
-      <div data-banner-id="carousel-banner"></div>
+      <h2>🎬 메인 슬라이드 배너</h2>
+      <p>
+        가로 꽉찬 메인 배너 - 3개 이미지가 자동 슬라이드됩니다 (1200x400px 권장)
+      </p>
+      <div data-banner-id="main-slide-banner"></div>
     </div>
 
     <div class="section">
-      <h2>🔄 롤링 배너 (연속 슬라이드)</h2>
-      <p>끊임없이 연속으로 슬라이드되는 배너</p>
+      <h2>📱 3개 나란히 배너</h2>
+      <p>상품 소개용 - 3개 이미지가 나란히 고정 표시됩니다 (300x300px 권장)</p>
+      <div data-banner-id="three-grid-banner"></div>
+    </div>
+
+    <div class="section">
+      <h2>🔄 롤링 배너</h2>
+      <p>
+        할인/이벤트용 - 3개 이미지가 연속적으로 롤링됩니다 (1200x200px 권장)
+      </p>
       <div data-banner-id="rolling-banner"></div>
     </div>
 
     <div class="section">
-      <h2>⚏ 그리드 배너 (2x2 격자)</h2>
-      <p>4개 이미지가 2x2 격자로 배치됩니다</p>
-      <div data-banner-id="grid-banner"></div>
+      <h2>🃏 카드 갤러리</h2>
+      <p>상품 갤러리용 - 카드 스타일로 가로 스크롤 가능 (200x250px 권장)</p>
+      <div data-banner-id="cards-banner"></div>
     </div>
 
     <div class="section">
-      <h2>✨ 페이드 배너 (페이드 전환)</h2>
-      <p>이미지가 부드럽게 페이드 인/아웃됩니다</p>
+      <h2>✨ 페이드 배너</h2>
+      <p>
+        브랜드 소개용 - 이미지가 부드럽게 페이드 전환됩니다 (1200x350px 권장)
+      </p>
       <div data-banner-id="fade-banner"></div>
     </div>
 
     <div class="section">
-      <h2>📏 롱배너 (기존)</h2>
-      <p>가로 꽉 차게, 자동 슬라이드</p>
-      <div data-banner-id="long-banner"></div>
+      <h2>⚏ 2x2 그리드</h2>
+      <p>
+        카테고리 소개용 - 4개 이미지가 2x2 격자로 배치됩니다 (400x400px 권장)
+      </p>
+      <div data-banner-id="grid-banner"></div>
     </div>
 
     <!-- 배너 스크립트 로드 -->
@@ -177,6 +191,47 @@
         banner.style.display = "block";
         window.location.reload();
       }
+
+      // URL 해시에서 특정 배너 ID 추출
+      function showSpecificBanner() {
+        const hash = window.location.hash.substring(1); // # 제거
+        if (hash) {
+          // 모든 섹션 숨기기
+          const sections = document.querySelectorAll(".section");
+          sections.forEach((section) => {
+            section.style.display = "none";
+          });
+
+          // 특정 배너만 보이기
+          const targetBanner = document.querySelector(
+            `[data-banner-id="${hash}"]`
+          );
+          if (targetBanner) {
+            const section = targetBanner.closest(".section");
+            if (section) {
+              section.style.display = "block";
+              section.scrollIntoView({ behavior: "smooth" });
+            }
+          } else {
+            // 배너를 찾을 수 없으면 새로 생성
+            const newSection = document.createElement("div");
+            newSection.className = "section";
+            newSection.innerHTML = `
+              <h2>🎯 ${hash} 배너 미리보기</h2>
+              <p>선택한 배너를 미리보기합니다</p>
+              <div data-banner-id="${hash}"></div>
+            `;
+            document.body.insertBefore(
+              newSection,
+              document.querySelector("script")
+            );
+            newSection.scrollIntoView({ behavior: "smooth" });
+          }
+        }
+      }
+
+      // 페이지 로드 시 실행
+      document.addEventListener("DOMContentLoaded", showSpecificBanner);
 
       // 콘솔에 안내 메시지
       console.log(
@@ -191,6 +246,14 @@
         "%c💡 API 연결 없이 배너를 테스트할 수 있습니다!",
         "color: #ff9800;"
       );
+
+      // URL 해시가 있으면 특정 배너만 표시
+      if (window.location.hash) {
+        console.log(
+          "%c🎯 특정 배너 미리보기 모드: " + window.location.hash.substring(1),
+          "color: #9c27b0; font-weight: bold;"
+        );
+      }
     </script>
   </body>
 </html>
