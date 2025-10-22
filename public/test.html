@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>배너 테스트</title>
+    <link rel="stylesheet" href="/banner-style.css" />
+  </head>
+  <body>
+    <h1>배너 테스트 페이지</h1>
+
+    <h2>1. 슬라이드 배너 (이미지 3개)</h2>
+    <!-- 빈 div, 스크립트가 이미지를 넣어줄거임 -->
+    <div class="banner-slide" data-banner-id="slide-banner"></div>
+
+    <h2>2. 롱배너 (이미지 2개)</h2>
+    <!-- 빈 div -->
+    <div class="banner-long" data-banner-id="long-banner"></div>
+
+    <h2>3. 풀스크린 배너</h2>
+    <button onclick="showFullscreen()">풀스크린 배너 열기</button>
+    <div
+      class="banner-fullscreen"
+      data-banner-id="full-banner"
+      style="display: none"
+    ></div>
+
+    <!-- 스크립트가 위 div들 찾아서 이미지 넣어줌 -->
+    <script src="/banner-script.js"></script>
+    <script>
+      function showFullscreen() {
+        const banner = document.querySelector(".banner-fullscreen");
+        banner.style.display = "block";
+        window.location.reload();
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>배너 로컬 테스트 (DB 없이)</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background: #f5f5f5;
+      }
+      .info-box {
+        background: #e3f2fd;
+        border-left: 4px solid #2196f3;
+        padding: 16px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+      }
+      .info-box h3 {
+        margin: 0 0 8px 0;
+        color: #1976d2;
+      }
+      .info-box p {
+        margin: 4px 0;
+        color: #555;
+        font-size: 14px;
+      }
+      .section {
+        background: white;
+        padding: 24px;
+        margin-bottom: 32px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .section h2 {
+        margin-top: 0;
+        color: #333;
+      }
+      button {
+        padding: 12px 24px;
+        font-size: 16px;
+        cursor: pointer;
+        background: #2196f3;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        transition: background 0.3s;
+      }
+      button:hover {
+        background: #1976d2;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <div class="info-box">
+      <h3>🧪 로컬 테스트 모드</h3>
+      <p>✅ 이 페이지는 DB 연결 없이 로컬에서 테스트할 수 있습니다!</p>
+      <p>📁 mock-data.json 파일에서 테스트 데이터를 읽어옵니다.</p>
+      <p>
+        💡 banner-script.js는 API 실패 시 자동으로 mock 데이터를 사용합니다.
+      </p>
+    </div> -->
+
+    <!-- 1. 슬라이드 배너 -->
+    <!-- <div class="section">
+      <h2>1️⃣ 슬라이드 배너 (이미지 3개)</h2>
+      <p>중앙 정렬, 자동 슬라이드, 네비게이션 버튼, 페이지네이션</p>
+      <div data-banner-id="slide-banner"></div>
+    </div> -->
+
+    <!-- 2. 롱배너 -->
+    <!-- <div class="section">
+      <h2>2️⃣ 롱배너 (이미지 2개)</h2>
+      <p>가로 꽉 차게, 자동 슬라이드</p>
+      <div data-banner-id="long-banner"></div>
+    </div> -->
+
+    <!-- 3. 풀스크린 배너 -->
+    <!-- <div class="section">
+      <h2>3️⃣ 전체화면 배너 (이미지 3개)</h2>
+      <p>버튼을 클릭하면 화면 전체에 배너가 표시됩니다</p>
+      <button onclick="showFullscreen()">전체화면 배너 열기</button>
+      <div
+        data-banner-id="full-banner"
+        style="display: none"
+        id="fullscreen-banner"
+      ></div>
+    </div> -->
+
+    <!-- 4. 커스텀 테스트 -->
+    <!-- <div class="section">
+      <h2>4️⃣ 커스텀 배너 테스트</h2>
+      <p>mock-data.json에 데이터를 추가하고 배너를 테스트하세요!</p>
+      <div class="info-box" style="margin-top: 16px">
+        <h3>📝 커스텀 배너 추가 방법</h3>
+        <p>1. public/mock-data.json 파일 열기</p>
+        <p>2. 새로운 배너 데이터 추가:</p>
+        <pre
+          style="
+            background: #263238;
+            color: #aed581;
+            padding: 12px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 13px;
+          "
+        >
+{
+  "my-custom-banner": {
+    "type": "slide",
+    "items": [
+      { "image_url": "your-image-url-1" },
+      { "image_url": "your-image-url-2" }
+    ],
+    "settings": {
+      "autoplay": true,
+      "interval": 3000
+    }
+  }
+}</pre
+        >
+        <p>3. HTML에 추가:</p>
+        <pre
+          style="
+            background: #263238;
+            color: #aed581;
+            padding: 12px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 13px;
+          "
+        >
+&lt;div data-banner-id="my-custom-banner"&gt;&lt;/div&gt;</pre
+        >
+      </div>
+    </div> -->
+    <div data-banner-id="long-banner"></div>
+
+    <!-- 배너 스크립트 로드 -->
+    <script src="/banner-script.js"></script>
+    <script>
+      function showFullscreen() {
+        const banner = document.getElementById("fullscreen-banner");
+        banner.style.display = "block";
+        window.location.reload();
+      }
+
+      // 콘솔에 안내 메시지
+      console.log(
+        "%c🎨 배너 로컬 테스트 모드",
+        "font-size: 20px; color: #2196f3; font-weight: bold;"
+      );
+      console.log(
+        "%c✅ mock-data.json에서 테스트 데이터를 읽어옵니다",
+        "color: #4caf50;"
+      );
+      console.log(
+        "%c💡 API 연결 없이 배너를 테스트할 수 있습니다!",
+        "color: #ff9800;"
+      );
+    </script>
+  </body>
+</html>
