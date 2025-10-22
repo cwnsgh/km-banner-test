@@ -56,6 +56,75 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
+    /* 🎠 캐러셀 배너 - 3개 이미지 무한 슬라이드 */
+    .banner-carousel {
+      width: 100%;
+      max-width: 1200px;
+      height: 300px;
+      margin: 0 auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .banner-carousel .banner-slide {
+      display: flex;
+      width: 300%; /* 3개 이미지 = 300% */
+      height: 100%;
+      animation: carousel-slide 15s infinite linear;
+    }
+
+    .banner-carousel .banner-image {
+      width: 33.333%; /* 100% / 3개 */
+      height: 100%;
+      object-fit: cover;
+      flex-shrink: 0;
+      position: relative;
+      opacity: 1;
+    }
+
+    /* 무한 슬라이드 애니메이션 */
+    @keyframes carousel-slide {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(0); }
+      33.333% { transform: translateX(-33.333%); }
+      58.333% { transform: translateX(-33.333%); }
+      66.666% { transform: translateX(-66.666%); }
+      91.666% { transform: translateX(-66.666%); }
+      100% { transform: translateX(0); }
+    }
+
+    /* 호버 시 일시정지 */
+    .banner-carousel:hover .banner-slide {
+      animation-play-state: paused;
+    }
+
+    /* 캐러셀 인디케이터 */
+    .banner-carousel .banner-pagination {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .banner-carousel .banner-pagination .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .banner-carousel .banner-pagination .dot.active {
+      background: white;
+      transform: scale(1.2);
+    }
+
     /* 이미지 공통 스타일 */
     .banner-image {
       position: absolute;
@@ -198,19 +267,27 @@
       // 이미지 생성
       this.createImages();
 
-      // 네비게이션 추가
-      if (this.data.images.length > 1) {
+      // 네비게이션 추가 (캐러셀 제외)
+      if (
+        this.data.images.length > 1 &&
+        this.data.banner_type !== "banner-carousel"
+      ) {
         this.createNavigation();
         this.createPagination();
       }
 
-      // 자동재생
-      if (this.data.settings?.autoplay) {
+      // 자동재생 (캐러셀은 CSS 애니메이션으로 자동)
+      if (
+        this.data.settings?.autoplay &&
+        this.data.banner_type !== "banner-carousel"
+      ) {
         this.startAutoplay();
       }
 
-      // 첫 이미지 활성화
-      this.updateActive();
+      // 첫 이미지 활성화 (캐러셀 제외)
+      if (this.data.banner_type !== "banner-carousel") {
+        this.updateActive();
+      }
 
       console.log(`✅ 배너 로드 완료: ${this.bannerId}`);
     }
@@ -289,20 +366,45 @@
         fullscreen: "banner-fullscreen",
         square: "banner-square", // 정사각형 배너
         vertical: "banner-vertical", // 세로 배너
+        carousel: "banner-carousel", // 캐러셀 배너 (3개 무한 슬라이드)
       };
       return typeMap[type] || "banner-slide";
     }
 
     createImages() {
-      this.data.images.forEach((imageUrl, index) => {
+      // 캐러셀 배너인 경우 특별 처리
+      if (this.data.banner_type === "banner-carousel") {
+        this.createCarouselImages();
+      } else {
+        this.data.images.forEach((imageUrl, index) => {
+          const img = document.createElement("img");
+          img.src = imageUrl;
+          img.className = "banner-image";
+          img.alt = `Banner ${index + 1}`;
+          this.container.appendChild(img);
+        });
+      }
+
+      this.images = this.container.querySelectorAll(".banner-image");
+    }
+
+    createCarouselImages() {
+      // 캐러셀용 슬라이드 컨테이너 생성
+      const slideContainer = document.createElement("div");
+      slideContainer.className = "banner-slide";
+
+      // 3개 이미지만 사용 (캐러셀은 정확히 3개)
+      const imagesToUse = this.data.images.slice(0, 3);
+
+      imagesToUse.forEach((imageUrl, index) => {
         const img = document.createElement("img");
         img.src = imageUrl;
         img.className = "banner-image";
-        img.alt = `Banner ${index + 1}`;
-        this.container.appendChild(img);
+        img.alt = `Carousel ${index + 1}`;
+        slideContainer.appendChild(img);
       });
 
-      this.images = this.container.querySelectorAll(".banner-image");
+      this.container.appendChild(slideContainer);
     }
 
     createNavigation() {

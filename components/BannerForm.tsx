@@ -31,6 +31,12 @@ export default function BannerForm({
   });
 
   const addItem = () => {
+    // 캐러셀 배너는 최대 3개까지만
+    if (type === "carousel" && items.length >= 3) {
+      alert("캐러셀 배너는 최대 3개의 이미지만 사용할 수 있습니다.");
+      return;
+    }
+
     setItems([
       ...items,
       {
@@ -100,7 +106,7 @@ export default function BannerForm({
       {/* 배너 타입 */}
       <div>
         <label className="block text-sm font-medium mb-2">배너 타입</label>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           <button
             type="button"
             onClick={() => setType("fullscreen")}
@@ -137,7 +143,41 @@ export default function BannerForm({
             <div className="font-semibold">롱배너</div>
             <div className="text-xs text-gray-500 mt-1">가로 꽉차게</div>
           </button>
+          <button
+            type="button"
+            onClick={() => setType("carousel")}
+            className={`p-4 border-2 rounded-lg transition-colors ${
+              type === "carousel"
+                ? "border-blue-600 bg-blue-50"
+                : "border-gray-200 hover:border-gray-300"
+            }`}
+          >
+            <div className="font-semibold">🎠 캐러셀</div>
+            <div className="text-xs text-gray-500 mt-1">3개 무한 슬라이드</div>
+          </button>
         </div>
+
+        {/* 캐러셀 배너 안내 */}
+        {type === "carousel" && (
+          <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="flex items-start gap-2">
+              <div className="text-blue-600 text-lg">🎠</div>
+              <div>
+                <h4 className="font-semibold text-blue-800">
+                  캐러셀 배너 안내
+                </h4>
+                <p className="text-sm text-blue-700 mt-1">
+                  • 정확히 3개의 이미지가 필요합니다
+                  <br />
+                  • 3개 이미지가 나란히 표시되며 자동으로 무한 슬라이드됩니다
+                  <br />
+                  • 호버 시 일시정지됩니다
+                  <br />• 네비게이션 버튼은 표시되지 않습니다
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* 설정 */}
@@ -200,9 +240,15 @@ export default function BannerForm({
           <button
             type="button"
             onClick={addItem}
-            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+            disabled={type === "carousel" && items.length >= 3}
+            className={`px-4 py-2 rounded-lg ${
+              type === "carousel" && items.length >= 3
+                ? "bg-gray-400 text-gray-200 cursor-not-allowed"
+                : "bg-green-600 text-white hover:bg-green-700"
+            }`}
           >
-            + 아이템 추가
+            + 아이템 추가{" "}
+            {type === "carousel" && items.length >= 3 && "(최대 3개)"}
           </button>
         </div>
 
