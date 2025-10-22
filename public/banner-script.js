@@ -9,22 +9,31 @@
     [data-banner-id] {
       position: relative;
       overflow: hidden;
-    }
-
-    /* 슬라이드 배너 */
-    .banner-slide {
       width: 100%;
       max-width: 1200px;
-      height: 500px;
-      margin: 0 auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease;
     }
 
-    /* 롱배너 */
+    [data-banner-id]:hover {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    /* 슬라이드 배너 - 고정 크기 */
+    .banner-slide {
+      height: 500px !important;
+      max-height: 500px !important;
+      min-height: 500px !important;
+    }
+
+    /* 롱배너 - 고정 크기 */
     .banner-long {
-      width: 100%;
-      height: 300px;
+      height: 200px !important;
+      max-height: 200px !important;
+      min-height: 200px !important;
     }
 
     /* 풀스크린 배너 */
@@ -35,7 +44,10 @@
       width: 100vw;
       height: 100vh;
       z-index: 9999;
-      background: #000;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* 커스텀 배너 예시: 정사각형 배너 */
@@ -283,55 +295,60 @@
       transform: scale(1.2);
     }
 
-    /* 이미지 공통 스타일 */
+    /* 이미지 공통 스타일 - 강제 크기 고정 */
     .banner-image {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      object-position: center !important;
       opacity: 0;
-      transition: opacity 0.5s ease-in-out;
+      transition: opacity 0.5s ease;
     }
 
     .banner-image.active {
-      opacity: 1;
+      opacity: 1 !important;
       z-index: 1;
     }
 
-    /* 네비게이션 버튼 */
+    /* 네비게이션 버튼 - 심플한 스타일 */
     .banner-nav {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(0, 0, 0, 0.5);
       border: none;
       width: 40px;
       height: 40px;
       border-radius: 50%;
       cursor: pointer;
-      font-size: 20px;
+      color: white;
       z-index: 10;
-      transition: background 0.3s;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
     }
 
     .banner-nav:hover {
-      background: rgba(255, 255, 255, 1);
+      background: rgba(0, 0, 0, 0.7);
     }
 
     .banner-nav.prev {
-      left: 20px;
+      left: 15px;
     }
 
     .banner-nav.next {
-      right: 20px;
+      right: 15px;
     }
 
-    /* 페이지네이션 */
+    /* 페이지네이션 - 심플한 도트 */
     .banner-pagination {
       position: absolute;
-      bottom: 20px;
+      bottom: 15px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
@@ -340,18 +357,21 @@
     }
 
     .banner-pagination .dot {
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.5);
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.3s ease;
+    }
+
+    .banner-pagination .dot:hover {
+      background: rgba(255, 255, 255, 0.8);
     }
 
     .banner-pagination .dot.active {
-      width: 24px;
-      border-radius: 5px;
-      background: rgba(255, 255, 255, 1);
+      background: white;
+      transform: scale(1.2);
     }
 
     /* ============================================ */
@@ -359,58 +379,44 @@
     /* ============================================ */
     
     @media (max-width: 768px) {
-      /* 메인 슬라이드 - 모바일 */
-      .banner-main-slide {
-        height: 250px;
-        border-radius: 6px;
-      }
-      
-      /* 3개 나란히 - 모바일에서 1열로 */
-      .banner-three-grid {
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(3, 1fr);
-        height: auto;
-        gap: 10px;
-        padding: 15px;
-      }
-      
-      /* 롤링 배너 - 모바일 */
-      .banner-rolling {
-        height: 150px;
-        border-radius: 6px;
-      }
-      
-      /* 카드 갤러리 - 모바일 */
-      .banner-cards {
-        height: 200px;
-        padding: 15px;
-        gap: 15px;
-      }
-      
-      .banner-cards .banner-image {
-        min-width: 150px;
-      }
-      
-      /* 페이드 배너 - 모바일 */
-      .banner-fade {
-        height: 250px;
-        border-radius: 6px;
-      }
-      
-      /* 2x2 그리드 - 모바일에서 2x2 유지 */
-      .banner-grid {
-        height: 300px;
-        padding: 15px;
-        gap: 8px;
-      }
-      
-      /* 기본 배너들 */
+      /* 기본 배너들 - 모바일 고정 크기 */
       .banner-slide {
-        height: 250px;
+        height: 300px !important;
+        max-height: 300px !important;
+        min-height: 300px !important;
+        margin: 15px auto;
       }
       
       .banner-long {
-        height: 150px;
+        height: 150px !important;
+        max-height: 150px !important;
+        min-height: 150px !important;
+        margin: 15px 0;
+      }
+
+      /* 네비게이션 버튼 - 모바일 */
+      .banner-nav {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+      }
+
+      .banner-nav.prev {
+        left: 10px;
+      }
+
+      .banner-nav.next {
+        right: 10px;
+      }
+
+      /* 페이지네이션 - 모바일 */
+      .banner-pagination {
+        bottom: 10px;
+      }
+
+      .banner-pagination .dot {
+        width: 6px;
+        height: 6px;
       }
     }
     
