@@ -56,14 +56,10 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
-    /* 🎠 캐러셀 배너 - 3개 이미지 무한 슬라이드 */
+    /* 🎠 캐러셀 배너 - 3개 이미지 무한 슬라이드 (가로 꽉참) */
     .banner-carousel {
       width: 100%;
-      max-width: 1200px;
       height: 300px;
-      margin: 0 auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       overflow: hidden;
       position: relative;
     }
@@ -78,11 +74,10 @@
     .banner-carousel .banner-image {
       width: 33.333%; /* 100% / 3개 */
       height: 100%;
-      object-fit: contain; /* 잘림 방지 - contain으로 변경 */
+      object-fit: cover; /* 가로 꽉참 - cover로 다시 변경 */
       flex-shrink: 0;
       position: relative;
       opacity: 1;
-      background: #f8f9fa; /* 배경색 추가 */
     }
 
     /* 무한 슬라이드 애니메이션 */
