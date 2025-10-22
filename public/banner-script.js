@@ -78,10 +78,11 @@
     .banner-carousel .banner-image {
       width: 33.333%; /* 100% / 3개 */
       height: 100%;
-      object-fit: cover;
+      object-fit: contain; /* 잘림 방지 - contain으로 변경 */
       flex-shrink: 0;
       position: relative;
       opacity: 1;
+      background: #f8f9fa; /* 배경색 추가 */
     }
 
     /* 무한 슬라이드 애니메이션 */
