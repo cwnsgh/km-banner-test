@@ -4,7 +4,7 @@ import { supabase } from "@/lib/supabase";
 // GET: 모든 배너 조회
 export async function GET() {
   const { data: banners, error } = await supabase
-    .from("banners")
+    .from("banner_instances")
     .select("*, banner_items(*)")
     .order("created_at", { ascending: false });
 
@@ -20,7 +20,7 @@ export async function GET() {
     banner_items: undefined,
   }));
 
-  return NextResponse.json(formattedBanners);
+  return NextResponse.json(formattedBanners || []);
 }
 
 // POST: 새 배너 생성
@@ -28,10 +28,15 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   const { name, type, settings, items } = body;
 
+  // banner_id 생성 (고유 식별자)
+  const bannerId = `banner-${Date.now()}-${Math.random()
+    .toString(36)
+    .substr(2, 9)}`;
+
   // 배너 생성
   const { data: banner, error: bannerError } = await supabase
-    .from("banners")
-    .insert({ name, type, settings })
+    .from("banner_instances")
+    .insert({ banner_id: bannerId, name, type, settings })
     .select()
     .single();
 
@@ -42,7 +47,7 @@ export async function POST(request: NextRequest) {
   // 배너 아이템 생성
   if (items && items.length > 0) {
     const bannerItems = items.map((item: any, index: number) => ({
-      banner_id: banner.id,
+      instance_id: banner.id,
       image_url: item.image_url,
       video_url: item.video_url,
       link_url: item.link_url,
@@ -60,4 +65,3 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json(banner, { status: 201 });
 }
-

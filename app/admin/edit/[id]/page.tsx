@@ -12,10 +12,6 @@ export default function EditBannerPage() {
   const [banner, setBanner] = useState<Banner | null>(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchBanner();
-  }, []);
-
   const fetchBanner = async () => {
     try {
       const res = await fetch(`/api/banners/${params.id}`);
@@ -25,6 +21,11 @@ export default function EditBannerPage() {
       console.error("Error fetching banner:", error);
     }
   };
+
+  useEffect(() => {
+    fetchBanner();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSubmit = async (data: {
     name: string;

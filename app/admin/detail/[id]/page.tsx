@@ -12,10 +12,6 @@ export default function BannerDetailPage() {
   const [banner, setBanner] = useState<Banner | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchBanner();
-  }, []);
-
   const fetchBanner = async () => {
     try {
       const res = await fetch(`/api/banners/${params.id}`);
@@ -27,6 +23,11 @@ export default function BannerDetailPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchBanner();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (loading) {
     return (

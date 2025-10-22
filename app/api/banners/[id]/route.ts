@@ -6,14 +6,30 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const { data: banner, error } = await supabase
-    .from("banners")
+  // banner_id 또는 id로 조회 시도
+  let { data: banner, error } = await supabase
+    .from("banner_instances")
     .select("*, banner_items(*)")
     .eq("id", params.id)
     .single();
 
+  // id로 못 찾으면 banner_id로 조회
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const result = await supabase
+      .from("banner_instances")
+      .select("*, banner_items(*)")
+      .eq("banner_id", params.id)
+      .single();
+
+    banner = result.data;
+    error = result.error;
+  }
+
+  if (error || !banner) {
+    return NextResponse.json(
+      { error: error?.message || "배너를 찾을 수 없습니다" },
+      { status: 404 }
+    );
   }
 
   // banner_items를 items로 변경하고 order로 정렬
@@ -37,7 +53,7 @@ export async function PUT(
 
   // 배너 업데이트
   const { error: bannerError } = await supabase
-    .from("banners")
+    .from("banner_instances")
     .update({ name, type, settings, updated_at: new Date().toISOString() })
     .eq("id", params.id);
 
@@ -46,12 +62,12 @@ export async function PUT(
   }
 
   // 기존 아이템 삭제
-  await supabase.from("banner_items").delete().eq("banner_id", params.id);
+  await supabase.from("banner_items").delete().eq("instance_id", params.id);
 
   // 새 아이템 추가
   if (items && items.length > 0) {
     const bannerItems = items.map((item: any, index: number) => ({
-      banner_id: params.id,
+      instance_id: params.id,
       image_url: item.image_url,
       video_url: item.video_url,
       link_url: item.link_url,
@@ -75,7 +91,10 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const { error } = await supabase.from("banners").delete().eq("id", params.id);
+  const { error } = await supabase
+    .from("banner_instances")
+    .delete()
+    .eq("id", params.id);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -83,4 +102,3 @@ export async function DELETE(
 
   return NextResponse.json({ success: true });
 }
-

@@ -15,21 +15,23 @@ export default function AdminPage() {
   const [banners, setBanners] = useState<Banner[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchBanners();
-  }, []);
-
   const fetchBanners = async () => {
     try {
       const res = await fetch("/api/banners");
       const data = await res.json();
-      setBanners(data);
+      setBanners(data || []);
     } catch (error) {
       console.error("Error fetching banners:", error);
+      setBanners([]);
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchBanners();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const deleteBanner = async (id: string) => {
     if (!confirm("정말 삭제하시겠습니까?")) return;
