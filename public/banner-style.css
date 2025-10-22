@@ -3,47 +3,75 @@ body {
   margin: 0;
   padding: 20px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: #f5f5f5;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
 }
 
 h1 {
-  color: #333;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 h2 {
   margin-top: 40px;
-  color: #666;
+  color: #fff;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 /* ============================================ */
 /* 배너 컨테이너 스타일 (빈 div에 적용될 스타일) */
 /* ============================================ */
 
-/* 슬라이드 배너 스타일 */
+/* 슬라이드 배너 스타일 - 모던 히어로 섹션 */
 .banner-slide {
   width: 100%;
-  max-width: 1200px;
-  height: 500px;
-  margin: 20px auto;
+  max-width: 1400px;
+  height: 600px;
+  margin: 30px auto;
   position: relative;
   overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  background: #fff;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 롱배너 스타일 */
+.banner-slide:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+/* 롱배너 스타일 - 프로모션 배너 */
 .banner-long {
   width: 100%;
-  height: 300px;
-  margin: 20px 0;
+  height: 400px;
+  margin: 30px 0;
   position: relative;
   overflow: hidden;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(255, 107, 107, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
 }
 
-/* 풀스크린 배너 스타일 */
+.banner-long:hover {
+  transform: scale(1.02);
+  box-shadow: 0 25px 50px rgba(255, 107, 107, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* 풀스크린 배너 스타일 - 임팩트 있는 모달 */
 .banner-fullscreen {
   position: fixed;
   top: 0;
@@ -51,7 +79,11 @@ h2 {
   width: 100vw;
   height: 100vh;
   z-index: 9999;
-  background: #000;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ============================================ */
@@ -68,7 +100,9 @@ h2 {
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1.1);
+  filter: brightness(0.9) saturate(1.1);
 }
 
 .banner-slide .banner-image.active,
@@ -76,69 +110,223 @@ h2 {
 .banner-fullscreen .banner-image.active {
   opacity: 1;
   z-index: 1;
+  transform: scale(1);
+  filter: brightness(1) saturate(1.2);
 }
 
-/* 네비게이션 버튼 */
+/* 이미지 오버레이 효과 */
+.banner-slide::before,
+.banner-long::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* 네비게이션 버튼 - 글래스모피즘 스타일 */
 .banner-nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.8);
-  border: none;
-  width: 40px;
-  height: 40px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
+  color: white;
   z-index: 10;
-  transition: background 0.3s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .banner-nav:hover {
-  background: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.banner-nav:active {
+  transform: translateY(-50%) scale(0.95);
 }
 
 .banner-nav.prev {
-  left: 20px;
+  left: 30px;
 }
 
 .banner-nav.next {
-  right: 20px;
+  right: 30px;
 }
 
-/* 페이지네이션 */
+/* 화살표 아이콘 */
+.banner-nav::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border: 2px solid currentColor;
+  border-bottom: none;
+  border-right: none;
+  transform: rotate(-45deg);
+}
+
+.banner-nav.next::before {
+  transform: rotate(135deg);
+}
+
+/* 페이지네이션 - 모던 도트 스타일 */
 .banner-pagination {
   position: absolute;
-  bottom: 20px;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 8px;
+  gap: 12px;
   z-index: 10;
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .banner-pagination .dot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.4);
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.banner-pagination .dot:hover {
+  background: rgba(255, 255, 255, 0.7);
+  transform: scale(1.2);
 }
 
 .banner-pagination .dot.active {
   width: 24px;
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 1);
+  border-radius: 12px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.banner-pagination .dot.active::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
 }
 
 /* 모바일 반응형 */
 @media (max-width: 768px) {
   .banner-slide {
-    height: 300px;
+    height: 400px;
+    margin: 20px auto;
+    border-radius: 16px;
   }
 
   .banner-long {
-    height: 200px;
+    height: 250px;
+    margin: 20px 0;
+    border-radius: 16px;
+  }
+
+  .banner-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .banner-nav.prev {
+    left: 15px;
+  }
+
+  .banner-nav.next {
+    right: 15px;
+  }
+
+  .banner-pagination {
+    bottom: 20px;
+    padding: 6px 12px;
+    gap: 8px;
+  }
+
+  .banner-pagination .dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .banner-pagination .dot.active {
+    width: 20px;
+    border-radius: 10px;
+  }
+}
+
+/* 추가 애니메이션 효과 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.banner-slide,
+.banner-long {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+/* 로딩 상태 */
+.banner-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: #666;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.banner-loading::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ddd;
+  border-top: 2px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
