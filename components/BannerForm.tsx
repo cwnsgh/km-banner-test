@@ -53,10 +53,17 @@ export default function BannerForm({
   };
 
   const uploadFile = async (index: number, file: File) => {
-    const formData = new FormData();
-    formData.append("file", file);
-
     try {
+      // 1. 이미지 압축 (동적 import)
+      const { compressForBannerType } = await import("@/lib/imageCompression");
+
+      console.log("🔄 이미지 압축 중...");
+      const compressedFile = await compressForBannerType(file, type);
+
+      // 2. 압축된 이미지 업로드
+      const formData = new FormData();
+      formData.append("file", compressedFile);
+
       const res = await fetch("/api/upload", {
         method: "POST",
         body: formData,
@@ -65,6 +72,7 @@ export default function BannerForm({
 
       if (data.url) {
         updateItem(index, "image_url", data.url);
+        console.log("✅ 업로드 완료!");
       }
     } catch (error) {
       console.error("Upload error:", error);
@@ -304,4 +312,3 @@ export default function BannerForm({
     </form>
   );
 }
-

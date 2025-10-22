@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 pt-16">
       <div className="max-w-4xl mx-auto px-8 py-16 text-center">
         <h1 className="text-5xl font-bold mb-4 text-gray-900">
           웹에이전시 배너 관리 시스템

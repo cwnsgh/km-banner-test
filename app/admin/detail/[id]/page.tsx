@@ -54,17 +54,8 @@ export default function BannerDetailPage() {
   };
 
   return (
-    <div className="min-h-screen p-8 bg-gray-50">
+    <div className="min-h-screen p-8 bg-gray-50 pt-24">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-6">
-          <Link
-            href="/admin"
-            className="text-blue-600 hover:underline flex items-center gap-2"
-          >
-            ← 목록으로
-          </Link>
-        </div>
-
         {/* 배너 정보 */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <div className="flex justify-between items-start mb-4">
@@ -155,4 +146,3 @@ export default function BannerDetailPage() {
     </div>
   );
 }
-

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
+import Link from "next/link";
 import BannerForm from "@/components/BannerForm";
 import type { Banner, BannerType } from "@/lib/supabase";
 
@@ -62,7 +63,7 @@ export default function EditBannerPage() {
   }
 
   return (
-    <div className="min-h-screen p-8 bg-gray-50">
+    <div className="min-h-screen p-8 bg-gray-50 pt-24">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-8">배너 수정</h1>
         <BannerForm
