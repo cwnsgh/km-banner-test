@@ -1,6 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
+// CORS 헤더 설정
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+// OPTIONS 요청 처리 (CORS preflight)
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
+
 // GET: 특정 배너 조회
 export async function GET(
   request: NextRequest,
@@ -28,7 +40,7 @@ export async function GET(
   if (error || !banner) {
     return NextResponse.json(
       { error: error?.message || "배너를 찾을 수 없습니다" },
-      { status: 404 }
+      { status: 404, headers: corsHeaders }
     );
   }
 
@@ -40,7 +52,7 @@ export async function GET(
     banner_items: undefined,
   };
 
-  return NextResponse.json(formattedBanner);
+  return NextResponse.json(formattedBanner, { headers: corsHeaders });
 }
 
 // PUT: 배너 수정
@@ -58,7 +70,10 @@ export async function PUT(
     .eq("id", params.id);
 
   if (bannerError) {
-    return NextResponse.json({ error: bannerError.message }, { status: 500 });
+    return NextResponse.json(
+      { error: bannerError.message },
+      { status: 500, headers: corsHeaders }
+    );
   }
 
   // 기존 아이템 삭제
@@ -79,11 +94,14 @@ export async function PUT(
       .insert(bannerItems);
 
     if (itemsError) {
-      return NextResponse.json({ error: itemsError.message }, { status: 500 });
+      return NextResponse.json(
+        { error: itemsError.message },
+        { status: 500, headers: corsHeaders }
+      );
     }
   }
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json({ success: true }, { headers: corsHeaders });
 }
 
 // DELETE: 배너 삭제
@@ -97,8 +115,11 @@ export async function DELETE(
     .eq("id", params.id);
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: error.message },
+      { status: 500, headers: corsHeaders }
+    );
   }
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json({ success: true }, { headers: corsHeaders });
 }

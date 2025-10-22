@@ -1,6 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
+// CORS 헤더 설정
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+// OPTIONS 요청 처리 (CORS preflight)
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders });
+}
+
 // GET: 모든 배너 조회
 export async function GET() {
   const { data: banners, error } = await supabase
@@ -9,7 +21,10 @@ export async function GET() {
     .order("created_at", { ascending: false });
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: error.message },
+      { status: 500, headers: corsHeaders }
+    );
   }
 
   // banner_items를 items로 변경하고 order로 정렬
@@ -20,7 +35,7 @@ export async function GET() {
     banner_items: undefined,
   }));
 
-  return NextResponse.json(formattedBanners || []);
+  return NextResponse.json(formattedBanners || [], { headers: corsHeaders });
 }
 
 // POST: 새 배너 생성
@@ -41,7 +56,10 @@ export async function POST(request: NextRequest) {
     .single();
 
   if (bannerError) {
-    return NextResponse.json({ error: bannerError.message }, { status: 500 });
+    return NextResponse.json(
+      { error: bannerError.message },
+      { status: 500, headers: corsHeaders }
+    );
   }
 
   // 배너 아이템 생성
@@ -59,9 +77,12 @@ export async function POST(request: NextRequest) {
       .insert(bannerItems);
 
     if (itemsError) {
-      return NextResponse.json({ error: itemsError.message }, { status: 500 });
+      return NextResponse.json(
+        { error: itemsError.message },
+        { status: 500, headers: corsHeaders }
+      );
     }
   }
 
-  return NextResponse.json(banner, { status: 201 });
+  return NextResponse.json(banner, { status: 201, headers: corsHeaders });
 }
