@@ -42,6 +42,9 @@ h2 {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  aspect-ratio: 16/9; /* 16:9 비율 유지 */
+  min-height: 400px;
+  max-height: 800px;
 }
 
 .banner-slide:hover {
@@ -63,6 +66,9 @@ h2 {
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
+  aspect-ratio: 3/1; /* 3:1 비율 유지 (롱배너) */
+  min-height: 200px;
+  max-height: 600px;
 }
 
 .banner-long:hover {
@@ -94,15 +100,38 @@ h2 {
 .banner-long .banner-image,
 .banner-fullscreen .banner-image {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.1);
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   opacity: 0;
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: scale(1.1);
   filter: brightness(0.9) saturate(1.1);
+}
+
+/* 이미지 비율 유지 옵션들 */
+.banner-slide .banner-image.contain {
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.banner-long .banner-image.contain {
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* 이미지가 작을 때 중앙 정렬 */
+.banner-slide .banner-image.small,
+.banner-long .banner-image.small {
+  object-fit: contain;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.1) 0%,
+    rgba(118, 75, 162, 0.1) 100%
+  );
 }
 
 .banner-slide .banner-image.active,
@@ -110,7 +139,7 @@ h2 {
 .banner-fullscreen .banner-image.active {
   opacity: 1;
   z-index: 1;
-  transform: scale(1);
+  transform: translate(-50%, -50%) scale(1);
   filter: brightness(1) saturate(1.2);
 }
 
@@ -241,15 +270,21 @@ h2 {
 /* 모바일 반응형 */
 @media (max-width: 768px) {
   .banner-slide {
-    height: 400px;
+    height: 50vw; /* 뷰포트 너비의 50% */
+    max-height: 400px;
+    min-height: 250px;
     margin: 20px auto;
     border-radius: 16px;
+    aspect-ratio: 16/9;
   }
 
   .banner-long {
-    height: 250px;
+    height: 30vw; /* 뷰포트 너비의 30% */
+    max-height: 250px;
+    min-height: 150px;
     margin: 20px 0;
     border-radius: 16px;
+    aspect-ratio: 3/1;
   }
 
   .banner-nav {
@@ -329,4 +364,56 @@ h2 {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* ============================================ */
+/* 배너 크기 조정 유틸리티 클래스들 */
+/* ============================================ */
+
+/* 슬라이드 배너 크기 변형 */
+.banner-slide.small {
+  height: 300px;
+  max-height: 400px;
+}
+
+.banner-slide.medium {
+  height: 500px;
+  max-height: 600px;
+}
+
+.banner-slide.large {
+  height: 700px;
+  max-height: 800px;
+}
+
+/* 롱배너 크기 변형 */
+.banner-long.small {
+  height: 200px;
+  max-height: 300px;
+}
+
+.banner-long.medium {
+  height: 350px;
+  max-height: 450px;
+}
+
+.banner-long.large {
+  height: 500px;
+  max-height: 600px;
+}
+
+/* 정사각형 배너 */
+.banner-square {
+  aspect-ratio: 1/1;
+  height: 400px;
+  max-height: 600px;
+  min-height: 300px;
+}
+
+/* 와이드 배너 (21:9) */
+.banner-ultrawide {
+  aspect-ratio: 21/9;
+  height: 300px;
+  max-height: 500px;
+  min-height: 200px;
 }
