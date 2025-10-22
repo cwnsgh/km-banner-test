@@ -10,7 +10,20 @@ const supabaseAnonKey =
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export type BannerType = "fullscreen" | "slide" | "long" | "carousel";
+export type BannerType =
+  | "fullscreen"
+  | "slide"
+  | "long"
+  | "carousel"
+  | "rolling"
+  | "stack"
+  | "grid"
+  | "circular"
+  | "panorama"
+  | "cards"
+  | "mosaic"
+  | "fade"
+  | "doors";
 
 export interface BannerItem {
   id?: string;

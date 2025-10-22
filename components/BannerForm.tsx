@@ -106,54 +106,157 @@ export default function BannerForm({
       {/* 배너 타입 */}
       <div>
         <label className="block text-sm font-medium mb-2">배너 타입</label>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-3 gap-3">
+          {/* 기본 배너들 */}
           <button
             type="button"
             onClick={() => setType("fullscreen")}
-            className={`p-4 border-2 rounded-lg transition-colors ${
+            className={`p-3 border-2 rounded-lg transition-colors ${
               type === "fullscreen"
                 ? "border-blue-600 bg-blue-50"
                 : "border-gray-200 hover:border-gray-300"
             }`}
           >
-            <div className="font-semibold">전체화면</div>
+            <div className="font-semibold text-sm">전체화면</div>
             <div className="text-xs text-gray-500 mt-1">화면 전체</div>
           </button>
           <button
             type="button"
             onClick={() => setType("slide")}
-            className={`p-4 border-2 rounded-lg transition-colors ${
+            className={`p-3 border-2 rounded-lg transition-colors ${
               type === "slide"
                 ? "border-blue-600 bg-blue-50"
                 : "border-gray-200 hover:border-gray-300"
             }`}
           >
-            <div className="font-semibold">슬라이드</div>
+            <div className="font-semibold text-sm">슬라이드</div>
             <div className="text-xs text-gray-500 mt-1">영역 내 슬라이드</div>
           </button>
           <button
             type="button"
             onClick={() => setType("long")}
-            className={`p-4 border-2 rounded-lg transition-colors ${
+            className={`p-3 border-2 rounded-lg transition-colors ${
               type === "long"
                 ? "border-blue-600 bg-blue-50"
                 : "border-gray-200 hover:border-gray-300"
             }`}
           >
-            <div className="font-semibold">롱배너</div>
+            <div className="font-semibold text-sm">롱배너</div>
             <div className="text-xs text-gray-500 mt-1">가로 꽉차게</div>
           </button>
+
+          {/* 슬라이딩 배너들 */}
           <button
             type="button"
             onClick={() => setType("carousel")}
-            className={`p-4 border-2 rounded-lg transition-colors ${
+            className={`p-3 border-2 rounded-lg transition-colors ${
               type === "carousel"
                 ? "border-blue-600 bg-blue-50"
                 : "border-gray-200 hover:border-gray-300"
             }`}
           >
-            <div className="font-semibold">🎠 캐러셀</div>
-            <div className="text-xs text-gray-500 mt-1">3개 무한 슬라이드</div>
+            <div className="font-semibold text-sm">🎠 캐러셀</div>
+            <div className="text-xs text-gray-500 mt-1">3개 나란히</div>
+          </button>
+          <button
+            type="button"
+            onClick={() => setType("rolling")}
+            className={`p-3 border-2 rounded-lg transition-colors ${
+              type === "rolling"
+                ? "border-blue-600 bg-blue-50"
+                : "border-gray-200 hover:border-gray-300"
+            }`}
+          >
+            <div className="font-semibold text-sm">🔄 롤링</div>
+            <div className="text-xs text-gray-500 mt-1">연속 슬라이드</div>
+          </button>
+          <button
+            type="button"
+            onClick={() => setType("stack")}
+            className={`p-3 border-2 rounded-lg transition-colors ${
+              type === "stack"
+                ? "border-blue-600 bg-blue-50"
+                : "border-gray-200 hover:border-gray-300"
+            }`}
+          >
+            <div className="font-semibold text-sm">📚 스택</div>
+            <div className="text-xs text-gray-500 mt-1">세로 슬라이드</div>
+          </button>
+
+          {/* 그리드 배너들 */}
+          <button
+            type="button"
+            onClick={() => setType("grid")}
+            className={`p-3 border-2 rounded-lg transition-colors ${
+              type === "grid"
+                ? "border-blue-600 bg-blue-50"
+                : "border-gray-200 hover:border-gray-300"
+            }`}
+          >
+            <div className="font-semibold text-sm">⚏ 그리드</div>
+            <div className="text-xs text-gray-500 mt-1">2x2 격자</div>
+          </button>
+          <button
+            type="button"
+            onClick={() => setType("mosaic")}
+            className={`p-3 border-2 rounded-lg transition-colors ${
+              type === "mosaic"
+                ? "border-blue-600 bg-blue-50"
+                : "border-gray-200 hover:border-gray-300"
+            }`}
+          >
+            <div className="font-semibold text-sm">🧩 모자이크</div>
+            <div className="text-xs text-gray-500 mt-1">비대칭 배치</div>
+          </button>
+          <button
+            type="button"
+            onClick={() => setType("cards")}
+            className={`p-3 border-2 rounded-lg transition-colors ${
+              type === "cards"
+                ? "border-blue-600 bg-blue-50"
+                : "border-gray-200 hover:border-gray-300"
+            }`}
+          >
+            <div className="font-semibold text-sm">🃏 카드</div>
+            <div className="text-xs text-gray-500 mt-1">카드 스타일</div>
+          </button>
+
+          {/* 특수 효과 배너들 */}
+          <button
+            type="button"
+            onClick={() => setType("fade")}
+            className={`p-3 border-2 rounded-lg transition-colors ${
+              type === "fade"
+                ? "border-blue-600 bg-blue-50"
+                : "border-gray-200 hover:border-gray-300"
+            }`}
+          >
+            <div className="font-semibold text-sm">✨ 페이드</div>
+            <div className="text-xs text-gray-500 mt-1">페이드 전환</div>
+          </button>
+          <button
+            type="button"
+            onClick={() => setType("circular")}
+            className={`p-3 border-2 rounded-lg transition-colors ${
+              type === "circular"
+                ? "border-blue-600 bg-blue-50"
+                : "border-gray-200 hover:border-gray-300"
+            }`}
+          >
+            <div className="font-semibold text-sm">⭕ 원형</div>
+            <div className="text-xs text-gray-500 mt-1">원형 회전</div>
+          </button>
+          <button
+            type="button"
+            onClick={() => setType("panorama")}
+            className={`p-3 border-2 rounded-lg transition-colors ${
+              type === "panorama"
+                ? "border-blue-600 bg-blue-50"
+                : "border-gray-200 hover:border-gray-300"
+            }`}
+          >
+            <div className="font-semibold text-sm">🌅 파노라마</div>
+            <div className="text-xs text-gray-500 mt-1">넓은 화면</div>
           </button>
         </div>
 
